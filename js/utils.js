@@ -7,15 +7,15 @@ export const getRandomFloat = (a, b, k) => {
         b = buff;
     }
 
-    return (a + (Math.random() * (b - a))).toFixed(k);
+    return (a + Math.floor((Math.random() * (b - a)))).toFixed(k);
 }
 
 export const getRandomSubarray = (array) => {
-    const randLength = Math.floor(Math.random() * array.length);
+    const randLength = getRandomFloat(0, array.length, 0);
     const subArray = [];
 
     for (let i = 0; i < randLength; i++) {
-        subArray[i] = array.splice( Math.floor(Math.random() * array.length), 1 )[0];
+        subArray[i] = array.splice( getRandomFloat(0, array.length, 0), 1 )[0];
     }
 
     return subArray;

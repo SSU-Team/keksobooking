@@ -89,7 +89,7 @@ const generateDataItem = () => {
     return obj;
 }
 
-export const generateDataList = () => {
+export const generateData = () => {
     const dataList = [];
     
     for (let i = 0; i < 10; i++) {
