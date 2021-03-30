@@ -8,9 +8,7 @@ const offerTypeToOfferTypeText = {
 const popupTemplate = document.querySelector("#card").content.querySelector(".popup");
 const mapCanvasElement = document.querySelector("#map-canvas");
 
-
-
-const renderDataItem = (dataItem) => {
+const createCustomPopupElement = (dataItem) => {
   const popupElement = popupTemplate.cloneNode(true);
   
   popupElement.querySelector(".popup__avatar").src = dataItem.author.avatar;
@@ -53,25 +51,72 @@ const renderDataItem = (dataItem) => {
   }
 
   mapCanvasElement.append(popupElement);
+
+  return popupElement;
 }
 
+const renderTiles = () => {  
+  window.__map = L.map('map-canvas').setView(
+    {
+      lat: 35.6804,
+      lng: 139.7690,
+    }, 13
+  );
+
+  L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', 
+    {
+      attribution: '',
+    }
+  ).addTo(window.__map);
+}
+
+const renderPins = (dataList) => {
+  const coords = {
+    lat: 35.6804,
+    lng: 139.7690,
+  }
+
+  const pinSetting = {
+    keepInView: true,
+  }
+
+  const customPopupElement = `<h2>Tokio</h2>`;
+  
+  const icon = L.icon({
+    iconUrl: './../img/main-pin.svg',
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+  });
+
+  const marker = L
+    .marker(coords, { icon })
+    .addTo(window.__map)
+    .bindPopup(customPopupElement, pinSetting);
+
+
+  dataList.map(dataItem => {
+    
+    const coords = {
+      lat: dataItem.location.x,
+      lng: dataItem.location.y,
+    }
+    
+    const customPopupElement = createCustomPopupElement(dataItem);
+    
+    const icon = L.icon({
+      iconUrl: './../img/pin.svg',
+      iconSize: [40, 40],
+      iconAnchor: [20, 40],
+    });
+    
+    const marker = L.marker(coords, { icon })
+      .addTo(window.__map)
+      .bindPopup( customPopupElement );    
+  });
+}
 
 export const renderMap = (dataList) => {
-
-  const mapCanvasElement = L.map('map-canvas').on(`load`, () => {
-    console.log(`The map is initialized`)
-  }).setView([51.505, -0.09], 13);
-  const tileURL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-  const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
-  
-  L.tileLayer(tileURL, { attribution: attribution, }).addTo(mapCanvasElement);
-  
-  const marker = L.marker({ lat: 59.96831,lng: 30.31748 }, { draggable: true });
-  
-
-  
-  for (let i = 0; i < dataList.length; i++) {
-    // renderDataItem(dataList[i]);
-  }
+  renderTiles();
+  renderPins(dataList);
 }
-

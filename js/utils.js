@@ -1,3 +1,18 @@
+const toFixedNoRounding = (x, n) => {
+    const reg = new RegExp("^-?\\d+(?:\\.\\d{0," + n + "})?", "g")
+    const a = x.toString().match(reg)[0];
+    const dot = a.indexOf(".");
+    
+    if (dot === -1) {
+        return a + "." + "0".repeat(n);
+    }
+    
+    const b = n - (a.length - dot) + 1;
+
+    return parseFloat(b > 0 ? (a + "0".repeat(b)) : a);
+} 
+  
+
 export const getRandomFloat = (a, b, k) => {
     if (a === b ) return a;
 
@@ -7,7 +22,7 @@ export const getRandomFloat = (a, b, k) => {
         b = buff;
     }
 
-    return (a + Math.floor((Math.random() * (b - a)))).toFixed(k);
+    return toFixedNoRounding( (a + (Math.random() * (b - a))) , k);
 }
 
 export const getRandomSubarray = (array) => {
