@@ -2,10 +2,12 @@
 
 import { generateData } from "./data.js";
 import { renderMap } from "./map.js";
-import { setupForm } from "./form.js";
+import { setupAdFormValidity } from "./ad-form-validity.js";
+import { setupAdFormUsability } from "./ad-form-usability.js";
 
 const dataList = generateData();
 
-setupForm();
 renderMap( dataList );
 
+setupAdFormValidity();
+setupAdFormUsability();

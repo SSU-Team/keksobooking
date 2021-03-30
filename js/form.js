@@ -1,9 +1,10 @@
-const mapFiltersElement = document.querySelector(`.map__filters`);
-const adFormElement = document.querySelector(`.ad-form`);
 
-const inputTitleElement = adFormElement.querySelector(`#title`);
-const selectTypeElement = adFormElement.querySelector(`#type`);
-const selectPriceElement = adFormElement.querySelector(`#price`);
+
+
+
+
+
+
 
 // ***
 
@@ -11,13 +12,7 @@ const onInputTitleInput = () => {
   console.log(inputTitleElement.validity);
   let message = ``;
 
-  message = ``;
-
   if (inputTitleElement.validity.tooShort) {
-    message = `` +
-      `Заголовок слишком короткий: ` +
-      `${inputTitleElement.value.length} символов. ` + 
-      `Должен содержать от 30 до 100 символов.`;
   } else if (inputTitleElement.validity.tooLong) {
     message = `` +
       `Заголовок слишком длинный: ` +
@@ -41,31 +36,9 @@ const setupTitle = () => {
 
 // ***
 
-const typeToMinPrice = {
-  "bungalow" : 0,
-  "flat"     : 1000,
-  "house"    : 5000,
-  "palace"   : 10000,
-}
 
-const onSelectTypeChange = () => {
-  selectPriceElement.setAttribute(`min`, typeToMinPrice[selectTypeElement.value]);
-  selectPriceElement.setAttribute(`placeholder`, typeToMinPrice[selectTypeElement.value]);
-}
-
-const setupSelectType = () => {
-  selectTypeElement.addEventListener(`change`, onSelectTypeChange);
-}
 
 // ***
-
-const onSelectPriceInvalid = () => {
-  const message = `` + 
-    `Цена типа ${selectTypeElement.value} ` + 
-    `меняется от ${typeToMinPrice[selectTypeElement.value]} ` + 
-    `до ${1_000_000} `; 
-    selectPriceElement.setCustomValidity(message);
-}
 
 const setupSelectPrice = () => {
   selectPriceElement.required = true;
@@ -74,34 +47,11 @@ const setupSelectPrice = () => {
   selectPriceElement.setAttribute(`max`, 1_000_000);
 
   selectPriceElement.addEventListener(`invalid`, onSelectPriceInvalid);
-
 }
 
 // ***
 
-const selectTimeinElement = adFormElement.querySelector(`#timein`);
-const selectTimeoutElement = adFormElement.querySelector(`#timeout`);
 
-const onSelectTimeinChange = () => {
-  selectTimeoutElement.value = selectTimeinElement.value;
-}
-
-const setupSelectTimein = () => {
-  selectTimeinElement.addEventListener(`change`, onSelectTimeinChange);
-}
-
-const onSelectTimeoutChange = () => {
-  selectTimeinElement.value = selectTimeoutElement.value;
-}
-
-const setupSelectTimeout = () => {
-  selectTimeoutElement.addEventListener(`change`, onSelectTimeoutChange);
-} 
-
-const setupSelectTimeinTimeout = () => {
-  setupSelectTimein();
-  setupSelectTimeout();
-}
 
 // ***
 
@@ -125,7 +75,7 @@ const moveAdFromIntoActivePhase = () => {
   Array.from(adFormElement.children).map(fieldsetElement => fieldsetElement.disabled = false);
 }
 
-// ***
+
 
 
 // ***
@@ -142,7 +92,7 @@ export const setupForm = () => {
   moveAdFromIntoActivePhase();
 
   setupTitle();
-  setupSelectType();
+
   setupSelectPrice();
-  setupSelectTimeinTimeout();
 }
+
