@@ -4,22 +4,6 @@ const adFormElement = document.querySelector(`.ad-form`);
 
 const inputTitleElement = adFormElement.querySelector(`#title`);
 
-const onInputTitleElementInvalid = () => {
-    let message = '';
-
-    if (inputTitleElement.validity.valueMissing === true) {
-        message = `Обязательное поле. Должен содержать от 30 до 100 символов.`;
-    } else if (inputTitleElement.validity.tooShort === true) {
-        message = `Заголовок слишком короткий: ${inputTitleElement.value.length} символов. Должен содержать от 30 до 100 символов.`;
-    } else if (inputTitleElement.validity.tooLong) {
-        message = `Заголовок слишком короткий: ${inputTitleElement.value.length} символов. Должен содержать от 30 до 100 символов.`;
-    } else {
-        message = ``;
-    } 
-
-    inputTitleElement.setCustomValidity(message);
-}
-
 const setInputTitleElementDefaultAttributes = () => {
     inputTitleElement.setAttribute(`required`, `required`);
     inputTitleElement.setAttribute(`minlength`, 30);
@@ -45,35 +29,6 @@ const typeToText = {
     "bungalow" : `Бунгало`,
 }
 
-const onSelectPriceElementInvalid = () => {
-    let message = '';
-
-    if (selectPriceElement.validity.valueMissing === true) {
-        message = `Обязательное поле.`;
-    } else if (selectPriceElement.validity.typeMismatch === true) {
-        message = `Поле должно содержать числовое значение.`;
-    } else if (selectPriceElement.validity.rangeOverflow === true) {
-        message = `Цена не превышает 1 000 000.`;
-    } else if (selectPriceElement.validity.rangeUnderflow === true) {
-        message = `Минимальная цена для типа ${typeToText[selectTypeElement.value]} составляет ${typeToMinPrice[selectTypeElement.value]}.`;
-    } else {
-        message = ``;
-    } // if we move this section into submit event and check all the inputs, this way we could check all the fields.
-
-    switch (true) {
-        case selectPriceElement.validity.valueMissing:
-            selectPriceElement.setCustomValidity(`Обязательное поле.`);
-            break;
-        case selectPriceElement.validity.typeMismatch:
-            selectPriceElement.setCustomValidity(`Поле должно содержать числовое значение.`);
-            break;
-        case selectPriceElement.validity.rangeOverflow:
-            
-            
-    }
-
-    selectPriceElement.setCustomValidity(message);
-}
 
 const setSelectPriceElementDefaultAttributes = () => {
     selectPriceElement.setAttribute(`required`, `required`);
@@ -93,19 +48,90 @@ const onSelectTimeinElementInvalid = () => {
 
 // ***
 
+const selectRoomNumberElement = adFormElement.querySelector(`#room_number`);
+const selectCapacityElement = adFormElement.querySelector(`#capacity`);
+
+// ***
+
 const onAdFormInvalid = () => {
-    if (inputTitleElement.validity.valid === false) {
-        onInputTitleElementInvalid();
-    } else if (selectPriceElement.validity.valid === false) {
-        onSelectPriceElementInvalid();
-    } else if (selectTimeoutElement.value !== selectTimeinElement.value) {
-        onSelectTimeinElementInvalid(); // will never workout if only this is incorrect, cuz form invalid doesnt pop on this expression.
-    } 
+    const isAdFormValid = false;
+    console.log(selectPriceElement.validity);
+
+    console.log(`CHECK:`)
+
+    switch (true) {
+        // inputTitleElement
+        case inputTitleElement.validity.valueMissing:
+            inputTitleElement.setCustomValidity(`Обязательное поле. Должен содержать от 30 до 100 символов.`);
+            console.log("1.1")
+            break;
+        case inputTitleElement.validity.tooShort:
+            inputTitleElement.setCustomValidity(`Заголовок слишком короткий: ${inputTitleElement.value.length} символов. Должен содержать от 30 до 100 символов.`);
+            console.log("1.2")
+            break;
+        case inputTitleElement.validity.tooLong:
+            inputTitleElement.setCustomValidity(`Заголовок слишком длинный: ${inputTitleElement.value.length} символов. Должен содержать от 30 до 100 символов.`);
+            console.log("1.3")
+            break;
+        case !(inputTitleElement.validity.valueMissing || inputTitleElement.validity.tooShort || inputTitleElement.validity.tooLong): 
+            inputTitleElement.setCustomValidity(``);
+            console.log("1.0")
+
+        // selectPriceElement
+        case (selectPriceElement.validity.valueMissing):
+            console.log("2.1");
+            selectPriceElement.setCustomValidity(`Обязательное поле.`);
+            break;
+        case selectPriceElement.validity.typeMismatch:
+            console.log("2.2");
+            selectPriceElement.setCustomValidity(`Поле должно содержать числовое значение.`);
+            break;
+        case selectPriceElement.validity.rangeOverflow:
+            console.log("2.3");
+            selectPriceElement.setCustomValidity(`Цена не превышает 1 000 000.`);
+            break;
+        case selectPriceElement.validity.rangeUnderflow:
+            console.log("2.4");
+            selectPriceElement.setCustomValidity(`Минимальная цена для типа ${typeToText[selectTypeElement.value]} составляет ${typeToMinPrice[selectTypeElement.value]}.`);
+            break;
+        case !(selectPriceElement.validity.valueMissing || selectPriceElement.validity.typeMismatch || selectPriceElement.validity.rangeOverflow || selectPriceElement.validity.rangeUnderflow):
+            console.log("2.0");
+            selectPriceElement.setCustomValidity(``);
+
+        // selectTimeoutElement & selectTimeinElement
+        case selectTimeoutElement.value !== selectTimeinElement.value:
+            selectTimeoutElement.setCustomValidity(`Время заезда и Время выезда должны совпадать.`);
+        case !(selectTimeoutElement.value !== selectTimeinElement.value):
+            selectTimeoutElement.setCustomValidity(``);
+
+        // selectRoomNumberElement & selectCapacityElement
+        case selectRoomNumberElement.value === 1 &&  selectCapacityElement.value > 1:
+            selectCapacityElement.setCustomValidity(`1 комната — для 1 гостя.`);
+            break;
+        case selectRoomNumberElement.value === 2 &&  selectCapacityElement.value > 2:
+            selectCapacityElement.setCustomValidity(`2 комнаты — для 2 гостей или для 1 гостя.`);
+            break;
+        case selectRoomNumberElement.value === 3 &&  selectCapacityElement.value > 3:
+            selectCapacityElement.setCustomValidity(`3 комнаты — для 3 гостей, для 2 гостей или для 1 гостя.`);
+            break;
+        case selectRoomNumberElement.value === 100 && selectCapacityElement.value !== 0:
+            selectCapacityElement.setCustomValidity(`100 комнат — не для гостей.`);
+        case (selectRoomNumberElement.value <= selectCapacityElement.value && (selectRoomNumberElement.value === 100 && selectCapacityElement.value === 0) ):
+            selectCapacityElement.setCustomValidity(``);
+            
+        default: 
+            inputTitleElement.setCustomValidity(``);
+            selectPriceElement.setCustomValidity(``);
+            selectTimeoutElement.setCustomValidity(``);
+            selectRoomNumberElement.setCustomValidity(``);
+            isAdFormValid = true;
+    }        
+
+    if (isAdFormValid === true) {
+        console.log('12313131232131312312213')
+    }
+
 }
-
-// *** 
-
-
 
 
 // ***
@@ -125,14 +151,3 @@ export const setupAdFormValidity = () => {
 
     adFormElement.addEventListener(`invalid`, onAdFormInvalid, true);
 }
-
-
-
-
-
-
-// Поле «Количество комнат» синхронизировано с полем «Количество мест» таким образом, что при выборе количества комнат вводятся ограничения на допустимые варианты выбора количества гостей:
-// 1 комната — «для 1 гостя»;
-// 2 комнаты — «для 2 гостей» или «для 1 гостя»;
-// 3 комнаты — «для 3 гостей», «для 2 гостей» или «для 1 гостя»;
-// 100 комнат — «не для гостей».
