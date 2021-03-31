@@ -13,7 +13,7 @@ const toFixedNoRounding = (x, n) => {
 } 
   
 
-export const getRandomFloat = (a, b, k) => {
+export const getRandomNumber = (a, b, k = 0) => {
     if (a === b ) return a;
 
     if (a > b) {
@@ -26,11 +26,11 @@ export const getRandomFloat = (a, b, k) => {
 }
 
 export const getRandomSubarray = (array) => {
-    const randLength = getRandomFloat(0, array.length, 0);
+    const randLength = getRandomNumber(0, array.length, 0);
     const subArray = [];
 
     for (let i = 0; i < randLength; i++) {
-        subArray[i] = array.splice( getRandomFloat(0, array.length, 0), 1 )[0];
+        subArray[i] = array.splice( getRandomNumber(0, array.length, 0), 1 )[0];
     }
 
     return subArray;

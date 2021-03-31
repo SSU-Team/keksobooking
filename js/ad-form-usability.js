@@ -32,10 +32,10 @@ const selectTypeElement = adFormElement.querySelector(`#type`);
 const selectPriceElement = adFormElement.querySelector(`#price`);
 
 const typeToMinPrice = {
+    "bungalow" : 0,
     "flat"     : 1000,
     "house"    : 5000,
     "palace"   : 10000,
-    "bungalow" : 0,
 }
 
 const onSelectTypeChange = () => {

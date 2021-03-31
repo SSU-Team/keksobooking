@@ -87,10 +87,11 @@ const renderPins = (dataList) => {
     iconUrl: './../img/main-pin.svg',
     iconSize: [40, 40],
     iconAnchor: [20, 40],
+    draggable: true,
   });
 
   const marker = L
-    .marker(coords, { icon })
+    .marker(coords, { icon: icon, draggable: true })
     .addTo(window.__map)
     .bindPopup(customPopupElement, pinSetting);
 
@@ -110,7 +111,7 @@ const renderPins = (dataList) => {
       iconAnchor: [20, 40],
     });
     
-    const marker = L.marker(coords, { icon })
+    const marker = L.marker(coords, { icon: icon })
       .addTo(window.__map)
       .bindPopup( customPopupElement );    
   });

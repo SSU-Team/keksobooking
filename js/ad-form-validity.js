@@ -6,33 +6,38 @@ const inputTitleElement = adFormElement.querySelector(`#title`);
 
 const setInputTitleElementDefaultAttributes = () => {
     inputTitleElement.setAttribute(`required`, `required`);
-    inputTitleElement.setAttribute(`minlength`, 30);
+    inputTitleElement.setAttribute(`minlength`, 2);
     inputTitleElement.setAttribute(`maxlength`, 100);
 }
 
 // ***
 
-const selectPriceElement = adFormElement.querySelector(`#price`);
 const selectTypeElement = adFormElement.querySelector(`#type`);
+const selectPriceElement = adFormElement.querySelector(`#price`);
 
 const typeToMinPrice = {
+    "bungalow" : 0,
     "flat"     : 1000,
     "house"    : 5000,
     "palace"   : 10000,
-    "bungalow" : 0,
 }
 
 const typeToText = {
+    "bungalow" : `Бунгало`,
     "flat"     : `Квартира`,
     "house"    : `Дом`,
     "palace"   : `Дворец`,
-    "bungalow" : `Бунгало`,
 }
 
+const setSelectTypeElementDefaultAttributes = () => {
+    selectTypeElement.value = `flat`;
+}
 
 const setSelectPriceElementDefaultAttributes = () => {
     selectPriceElement.setAttribute(`required`, `required`);
     selectPriceElement.setAttribute(`type`, `number`);
+    selectPriceElement.setAttribute(`placeholder`, typeToMinPrice[selectTypeElement.value]);
+    selectPriceElement.setAttribute(`min`, typeToMinPrice[selectTypeElement.value]);
     selectPriceElement.setAttribute(`max`, 1_000_000);
 }
 
@@ -40,11 +45,6 @@ const setSelectPriceElementDefaultAttributes = () => {
 
 const selectTimeinElement = adFormElement.querySelector(`#timein`);
 const selectTimeoutElement = adFormElement.querySelector(`#timeout`);
-
-const onSelectTimeinElementInvalid = () => {
-    const message = `Время заезда и выезда должны совпадать`;
-    selectTimeoutElement.setCustomValidity(message);
-}
 
 // ***
 
@@ -58,6 +58,7 @@ const onAdFormInvalid = () => {
     console.log(selectPriceElement.validity);
 
     console.log(`CHECK:`)
+    // debugger;
 
     switch (true) {
         // inputTitleElement
@@ -76,9 +77,11 @@ const onAdFormInvalid = () => {
         case !(inputTitleElement.validity.valueMissing || inputTitleElement.validity.tooShort || inputTitleElement.validity.tooLong): 
             inputTitleElement.setCustomValidity(``);
             console.log("1.0")
+    }
 
+    switch (true) {
         // selectPriceElement
-        case (selectPriceElement.validity.valueMissing):
+        case selectPriceElement.validity.valueMissing:
             console.log("2.1");
             selectPriceElement.setCustomValidity(`Обязательное поле.`);
             break;
@@ -97,13 +100,17 @@ const onAdFormInvalid = () => {
         case !(selectPriceElement.validity.valueMissing || selectPriceElement.validity.typeMismatch || selectPriceElement.validity.rangeOverflow || selectPriceElement.validity.rangeUnderflow):
             console.log("2.0");
             selectPriceElement.setCustomValidity(``);
+    }
 
+    switch (true) {
         // selectTimeoutElement & selectTimeinElement
         case selectTimeoutElement.value !== selectTimeinElement.value:
             selectTimeoutElement.setCustomValidity(`Время заезда и Время выезда должны совпадать.`);
         case !(selectTimeoutElement.value !== selectTimeinElement.value):
             selectTimeoutElement.setCustomValidity(``);
+    }
 
+    switch (true) {
         // selectRoomNumberElement & selectCapacityElement
         case selectRoomNumberElement.value === 1 &&  selectCapacityElement.value > 1:
             selectCapacityElement.setCustomValidity(`1 комната — для 1 гостя.`);
@@ -118,17 +125,6 @@ const onAdFormInvalid = () => {
             selectCapacityElement.setCustomValidity(`100 комнат — не для гостей.`);
         case (selectRoomNumberElement.value <= selectCapacityElement.value && (selectRoomNumberElement.value === 100 && selectCapacityElement.value === 0) ):
             selectCapacityElement.setCustomValidity(``);
-            
-        default: 
-            inputTitleElement.setCustomValidity(``);
-            selectPriceElement.setCustomValidity(``);
-            selectTimeoutElement.setCustomValidity(``);
-            selectRoomNumberElement.setCustomValidity(``);
-            isAdFormValid = true;
-    }        
-
-    if (isAdFormValid === true) {
-        console.log('12313131232131312312213')
     }
 
 }
@@ -147,7 +143,8 @@ export const setupAdFormValidity = () => {
     setAdFormDefaultAttributes();
 
     setInputTitleElementDefaultAttributes();
+    setSelectTypeElementDefaultAttributes();
     setSelectPriceElementDefaultAttributes();
 
-    adFormElement.addEventListener(`invalid`, onAdFormInvalid, true);
+    adFormElement.addEventListener(`submit`, onAdFormInvalid);
 }

@@ -1,13 +1,3 @@
-
-
-
-
-
-
-
-
-// ***
-
 const onInputTitleInput = () => {
   console.log(inputTitleElement.validity);
   let message = ``;
@@ -36,10 +26,6 @@ const setupTitle = () => {
 
 // ***
 
-
-
-// ***
-
 const setupSelectPrice = () => {
   selectPriceElement.required = true;
   selectPriceElement.setAttribute(`min`, typeToMinPrice[selectTypeElement.value]);
@@ -48,10 +34,6 @@ const setupSelectPrice = () => {
 
   selectPriceElement.addEventListener(`invalid`, onSelectPriceInvalid);
 }
-
-// ***
-
-
 
 // ***
 
@@ -75,9 +57,6 @@ const moveAdFromIntoActivePhase = () => {
   Array.from(adFormElement.children).map(fieldsetElement => fieldsetElement.disabled = false);
 }
 
-
-
-
 // ***
 
 export const setupForm = () => {
@@ -95,4 +74,3 @@ export const setupForm = () => {
 
   setupSelectPrice();
 }
-

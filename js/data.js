@@ -1,5 +1,5 @@
 
-import { getRandomFloat, getRandomSubarray } from "./utils.js";
+import { getRandomNumber, getRandomSubarray } from "./utils.js";
 
 const titleList = [
     "AZIMUT Отель Смоленская",
@@ -50,7 +50,7 @@ const photosList = [
 ];
 
 
-const getAvatar = () => "img/avatars/user0" + getRandomFloat(1, 9, 0) + ".png";
+const getAvatar = () => "img/avatars/user0" + getRandomNumber(1, 9) + ".png";
 const getTitle = () => titleList[ Math.floor(Math.random() * titleList.length) ];
 const getDescription = () => descriptionList[ Math.floor(Math.random() * descriptionList.length) ];
 const getType = () => typeList[ Math.floor(Math.random() * typeList.length) ];
@@ -67,19 +67,19 @@ const generateDataItem = () => {
     obj.author.avatar = getAvatar();
     
     obj.location = {}
-    obj.location.x = getRandomFloat(35.65000, 35.70000, 5);
-    obj.location.y = getRandomFloat(139.70000, 139.80000, 5);
+    obj.location.x = getRandomNumber(35.65000, 35.70000, 5);
+    obj.location.y = getRandomNumber(139.70000, 139.80000, 5);
     
     obj.offer = {};
     obj.offer.title = getTitle();
     obj.offer.description = getDescription();
     obj.offer.address = obj.location.x + ", " + obj.location.y;
-    obj.offer.price = getRandomFloat(0, 5000, 0);
+    obj.offer.price = getRandomNumber(0, 5000, 0);
     obj.offer.type = getType(0, 5000, 0);
-    obj.offer.price = getRandomFloat(0, 5000, 0);
-    obj.offer.price = getRandomFloat(0, 5000, 0);
-    obj.offer.rooms = getRandomFloat(1, 5, 0);
-    obj.offer.guests = getRandomFloat(1, 5, 0);
+    obj.offer.price = getRandomNumber(0, 5000, 0);
+    obj.offer.price = getRandomNumber(0, 5000, 0);
+    obj.offer.rooms = getRandomNumber(1, 5, 0);
+    obj.offer.guests = getRandomNumber(1, 5, 0);
     obj.offer.checkin = getCheckin();
     obj.offer.checkout = getCheckout();
 
