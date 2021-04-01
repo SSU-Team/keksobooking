@@ -2,44 +2,8 @@ const adFormElement = document.querySelector(`.ad-form`);
 
 // ***
 
-const inputTitleElement = adFormElement.querySelector(`#title`);
-
-const setInputTitleElementDefaultAttributes = () => {
-    inputTitleElement.setAttribute(`required`, `required`);
-    inputTitleElement.setAttribute(`minlength`, 2);
-    inputTitleElement.setAttribute(`maxlength`, 100);
-}
-
-// ***
-
 const selectTypeElement = adFormElement.querySelector(`#type`);
 const selectPriceElement = adFormElement.querySelector(`#price`);
-
-const typeToMinPrice = {
-    "bungalow" : 0,
-    "flat"     : 1000,
-    "house"    : 5000,
-    "palace"   : 10000,
-}
-
-const typeToText = {
-    "bungalow" : `Бунгало`,
-    "flat"     : `Квартира`,
-    "house"    : `Дом`,
-    "palace"   : `Дворец`,
-}
-
-const setSelectTypeElementDefaultAttributes = () => {
-    selectTypeElement.value = `flat`;
-}
-
-const setSelectPriceElementDefaultAttributes = () => {
-    selectPriceElement.setAttribute(`required`, `required`);
-    selectPriceElement.setAttribute(`type`, `number`);
-    selectPriceElement.setAttribute(`placeholder`, typeToMinPrice[selectTypeElement.value]);
-    selectPriceElement.setAttribute(`min`, typeToMinPrice[selectTypeElement.value]);
-    selectPriceElement.setAttribute(`max`, 1_000_000);
-}
 
 // ***
 
@@ -52,6 +16,12 @@ const selectRoomNumberElement = adFormElement.querySelector(`#room_number`);
 const selectCapacityElement = adFormElement.querySelector(`#capacity`);
 
 // ***
+
+const isTitleCorrect = () => {
+    if (inputTitleElement.value = "") {
+        
+    }
+}
 
 const onAdFormInvalid = () => {
     const isAdFormValid = false;
