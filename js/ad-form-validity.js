@@ -1,39 +1,68 @@
 const adFormElement = document.querySelector(`.ad-form`);
-
-// ***
-
+const inputTitleElement = adFormElement.querySelector(`#title`);
 const selectTypeElement = adFormElement.querySelector(`#type`);
 const selectPriceElement = adFormElement.querySelector(`#price`);
-
-// ***
-
 const selectTimeinElement = adFormElement.querySelector(`#timein`);
 const selectTimeoutElement = adFormElement.querySelector(`#timeout`);
-
-// ***
-
 const selectRoomNumberElement = adFormElement.querySelector(`#room_number`);
 const selectCapacityElement = adFormElement.querySelector(`#capacity`);
 
-// ***
+const TITLE_MIN_LENGTH = 10;
+const TITLE_MAX_LENGTH = 100;
 
-const isTitleCorrect = () => {
-    if (inputTitleElement.value = "") {
-        
+const indicateTitleInvalidity = () => {
+
+}
+
+const isTitleValid = () => {
+    if ( inputTitleElement.value.length >= TITLE_MIN_LENGTH && inputTitleElement.value.length <= TITLE_MAX_LENGTH) {
+        return true;
+    } else {
+        return false;
     }
 }
 
-const onAdFormInvalid = () => {
+const onAdFormSubmit = () => {
     const isAdFormValid = false;
-    console.log(selectPriceElement.validity);
 
     console.log(`CHECK:`)
-    // debugger;
+    debugger;
+    console.log(inputTitleElement.value >= 10);
 
-    switch (true) {
+    if (isTitleValid) {
+
+    } else {
+        event.preventDefault();
+
+    }
+}
+
+// ***
+
+const setAdFormDefaultAttributes = () => {
+    adFormElement.method = 'POST';
+    adFormElement.action = 'https://22.javascript.pages.academy/keksobooking';
+    adFormElement.enctype = 'multipart/form-data';
+}
+
+export const setupAdFormValidity = () => {
+    setAdFormDefaultAttributes();
+
+
+
+    adFormElement.addEventListener(`submit`, onAdFormSubmit);
+}
+
+
+/*
+
+
+switch (true) {
         // inputTitleElement
-        case inputTitleElement.validity.valueMissing:
-            inputTitleElement.setCustomValidity(`Обязательное поле. Должен содержать от 30 до 100 символов.`);
+        case !( inputTitleElement.value.length >= 10 ):
+            event.preventDefault();
+            inputTitleElement.setCustomValidity(`Слишком коротко!!.`);
+            inputTitleElement.reportValidity();
             console.log("1.1")
             break;
         case inputTitleElement.validity.tooShort:
@@ -47,9 +76,10 @@ const onAdFormInvalid = () => {
         case !(inputTitleElement.validity.valueMissing || inputTitleElement.validity.tooShort || inputTitleElement.validity.tooLong): 
             inputTitleElement.setCustomValidity(``);
             console.log("1.0")
-    }
+    }   
 
-    switch (true) {
+
+switch (true) {
         // selectPriceElement
         case selectPriceElement.validity.valueMissing:
             console.log("2.1");
@@ -97,24 +127,6 @@ const onAdFormInvalid = () => {
             selectCapacityElement.setCustomValidity(``);
     }
 
-}
 
 
-// ***
-
-const setAdFormDefaultAttributes = () => {
-    adFormElement.method = 'POST';
-    adFormElement.action = 'https://22.javascript.pages.academy/keksobooking';
-    adFormElement.enctype = 'multipart/form-data';
-}
-
-export const setupAdFormValidity = () => {
-
-    setAdFormDefaultAttributes();
-
-    setInputTitleElementDefaultAttributes();
-    setSelectTypeElementDefaultAttributes();
-    setSelectPriceElementDefaultAttributes();
-
-    adFormElement.addEventListener(`submit`, onAdFormInvalid);
-}
+*/

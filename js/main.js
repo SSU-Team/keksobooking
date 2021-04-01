@@ -9,5 +9,5 @@ const dataList = generateData();
 
 renderMap( dataList );
 
-// setupAdFormValidity();
+setupAdFormValidity();
 setupAdFormUsability();
