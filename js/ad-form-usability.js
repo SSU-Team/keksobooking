@@ -123,6 +123,6 @@ export const setupAdFormUsability = () => {
   syncRoomsCopapicity();
 
   setupSelectTimeinTimeoutInteraction();
-  setupSelectTypePriceInteraction();
+  // setupSelectTypePriceInteraction();
   setupSelectRoomsNumberCopacityInteraction();
 }

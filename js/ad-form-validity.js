@@ -1,3 +1,5 @@
+// TODO#01.  NO FOCUS IF INVALID
+
 const adFormElement = document.querySelector(`.ad-form`);
 const inputTitleElement = adFormElement.querySelector(`#title`);
 const selectTypeElement = adFormElement.querySelector(`#type`);
@@ -10,34 +12,21 @@ const selectCapacityElement = adFormElement.querySelector(`#capacity`);
 const TITLE_MIN_LENGTH = 10;
 const TITLE_MAX_LENGTH = 100;
 
-const indicateTitleInvalidity = () => {
-
+const TYPE_TO_MIN_PRICE = {
+    "bungalow" : 0,
+    "flat"     : 1000,
+    "house"    : 5000,
+    "palace"   : 10000,
 }
 
-const isTitleValid = () => {
-    if ( inputTitleElement.value.length >= TITLE_MIN_LENGTH && inputTitleElement.value.length <= TITLE_MAX_LENGTH) {
-        return true;
-    } else {
-        return false;
-    }
+const TYPE_TO_NAME = {
+    "bungalow" : "Бунгало",
+    "flat"     : "Квартира",
+    "house"    : "Дом",
+    "palace"   : "Дворец",
 }
 
-const onAdFormSubmit = () => {
-    const isAdFormValid = false;
-
-    console.log(`CHECK:`)
-    debugger;
-    console.log(inputTitleElement.value >= 10);
-
-    if (isTitleValid) {
-
-    } else {
-        event.preventDefault();
-
-    }
-}
-
-// ***
+const MAX_PRICE = 1_000_000;
 
 const setAdFormDefaultAttributes = () => {
     adFormElement.method = 'POST';
@@ -45,10 +34,95 @@ const setAdFormDefaultAttributes = () => {
     adFormElement.enctype = 'multipart/form-data';
 }
 
+// ***
+
+const validateAdFormElement = () => {
+    validateTitleElement();
+}
+
+const onAdFormSubmit = () => {
+    validateAdFormElement();
+}
+
+const showTitleElementValidityStatus = () => { 
+    const valueLength = inputTitleElement.value.length;
+    let message = '';
+
+    if (valueLength < TITLE_MIN_LENGTH) {
+        message = `Заголовок слишком короткий. Длина должна составлять от ${}. У вас ${valueLength}.`;
+    } else if (valueLength > TITLE_MAX_LENGTH) {
+        message = `Заголовок слишком длинный. Не более 100 символов. У вас ${valueLength}.`;
+    }
+
+
+
+
+    
+    inputTitleElement.setCustomValidity(``);
+    
+    if ( !(message === '') ) {
+        console.log(message);
+        inputTitleElement.setCustomValidity(message)
+    }
+    
+    inputTitleElement.reportValidity();
+}
+
+const showSelectPriceElementValidityStatus = () => {
+    const typeValue = selectTypeElement.value;
+    const typeText = TYPE_TO_NAME[typeValue];
+    const minPrice = TYPE_TO_MIN_PRICE[typeValue];
+    const priceValue = selectPriceElement.value;
+
+    let message = ``;
+
+    selectPriceElement.setCustomValidity(``);
+
+    if (priceValue < minPrice) {
+        message = `Минимальная цена для типа "${typeText}" составляет: ${minPrice}. У вас ${priceValue}.`;
+    } else if (priceValue > MAX_PRICE) {
+        message = `Максимальная цена для типа "${typeText}" составляет: ${minPrice}. У вас ${priceValue}.`;
+    }
+
+    if ( !(message === ``) ) {
+        selectPriceElement.setCustomValidity(message);
+    }
+
+    selectPriceElement.reportValidity(message)
+}
+
+const onSelectPriceElementInput = () => {
+    showSelectPriceElementValidityStatus();
+}
+
+const onSelectPriceElementBlur = () => {
+    showSelectPriceElementValidityStatus();
+
+    selectPriceElement.addEventListener(`input`, onSelectPriceElementInput);
+}
+
+const setupPriceElement = () => {
+    selectPriceElement.addEventListener(`blur`, onSelectPriceElementBlur);
+}
+
+const onInputTitleElementBlur = () => {
+    showTitleElementValidityStatus();
+
+    inputTitleElement.addEventListener(`input`, onInputTitleElementBlur);
+}
+
+const setupTitleElement = () => {
+    inputTitleElement.addEventListener(`blur`, onInputTitleElementBlur);    
+}
+
+// ***
+
 export const setupAdFormValidity = () => {
     setAdFormDefaultAttributes();
 
-
+    setupTitleElement();
+    setupPriceElement();
+    
 
     adFormElement.addEventListener(`submit`, onAdFormSubmit);
 }
