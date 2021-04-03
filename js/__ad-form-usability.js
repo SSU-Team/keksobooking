@@ -1,3 +1,5 @@
+// TODO add Timeout sync from timein
+
 const adFormElement = document.querySelector(`.ad-form`);
 const inputTitleElement = adFormElement.querySelector(`#title`);
 const selectTypeElement = adFormElement.querySelector(`#type`);
@@ -110,10 +112,7 @@ const setSelectRoomNumberElementDefaultAttributes = () => selectRoomNumberElemen
 //
 // SETUP
 
-// 1 этап. Установили необходимые настройки
-// 2 этап. Установили возможные значения в зависимости от других полей
-// 3 этап. Навесили обработчики на интерактивные элементы. 
-export const setupAdFormUsability = () => {
+export const setupFormAdFormUsability = () => {
   setInputTitleElementDefaultAttributes();
   setSelectTypeElementDefaultAttributes();
   setSelectPriceElementDefaultAttributes();
@@ -122,7 +121,7 @@ export const setupAdFormUsability = () => {
   syncTypeToPrice();
   syncRoomsCopapicity();
 
+  setupSelectTypePriceInteraction();
   setupSelectTimeinTimeoutInteraction();
-  // setupSelectTypePriceInteraction();
   setupSelectRoomsNumberCopacityInteraction();
 }

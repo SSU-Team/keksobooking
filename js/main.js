@@ -1,13 +1,9 @@
-'use strict';
-
-import { generateData } from "./data.js";
-import { renderMap } from "./map.js";
-import { setupAdFormValidity } from "./ad-form-validity.js";
-import { setupAdFormUsability } from "./ad-form-usability.js";
+import { generateData } from "./_data.js";
+import { renderMap } from "./_map.js";
+import { setupFormAdForm } from "./_ad-form.js";
 
 const dataList = generateData();
-
 renderMap( dataList );
+setupFormAdForm();
 
-setupAdFormValidity();
-setupAdFormUsability();
+
