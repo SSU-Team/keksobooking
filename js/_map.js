@@ -117,6 +117,13 @@ const renderPins = (dataList) => {
     .bindPopup(customPopupElement, pinSetting);
 }
 
+export const renderMapOnRequestError = () => {
+  mapCanvasElement.style = `
+    background-image: url('img/error.gif');
+    background-repeat: repeat;
+    `;
+}
+
 export const renderMap = (dataList) => {
   renderTiles();
   renderPins(dataList);
