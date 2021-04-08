@@ -95,6 +95,7 @@ const renderPins = (dataList) => {
     .addTo(window.__map)
     .bindPopup(customPopupElement, pinSetting);
 
+
   dataList.map(dataItem => {
     
     const coords = {

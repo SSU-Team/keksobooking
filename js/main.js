@@ -1,11 +1,7 @@
-'use strict';
+import { renderMap } from "./_map.js";
+import { setupFormAdForm } from "./_ad-form.js";
 
-import { generateData } from "./data.js";
-import { renderMap } from "./map.js";
-import { setupAdFormValidity } from "./ad-form-validity.js";
-import { setupAdFormUsability } from "./ad-form-usability.js";
-
-const dataList = generateData();
+setupFormAdForm();
 
 fetch(`https://22.javascript.pages.academy/keksobooking/data`)
   .then(response => response.json())
@@ -13,7 +9,4 @@ fetch(`https://22.javascript.pages.academy/keksobooking/data`)
     renderMap(datalist)
   })
 
-// renderMap( dataList );
 
-setupAdFormValidity();
-setupAdFormUsability();
