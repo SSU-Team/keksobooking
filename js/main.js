@@ -8,5 +8,3 @@ fetch(`https://22.javascript.pages.academy/keksobooking/data`)
   .then(datalist => {
     renderMap(datalist)
   })
-
-

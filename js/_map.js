@@ -72,6 +72,27 @@ const renderTiles = () => {
 }
 
 const renderPins = (dataList) => {
+  
+  dataList.map(dataItem => {
+    
+    const coords = {
+      lat: dataItem.location.lat,
+      lng: dataItem.location.lng,
+    }
+
+    const customPopupElement = createCustomPopupElement(dataItem);
+
+    const icon = L.icon({
+      iconUrl: './img/pin.svg',
+      iconSize: [40, 40],
+      iconAnchor: [20, 40],
+    });
+    
+    const marker = L.marker(coords, { icon: icon })
+      .addTo(window.__map)
+      .bindPopup( customPopupElement );    
+  });
+
   const coords = {
     lat: 35.6804,
     lng: 139.7690,
@@ -94,27 +115,6 @@ const renderPins = (dataList) => {
     .marker(coords, { icon: icon, draggable: true })
     .addTo(window.__map)
     .bindPopup(customPopupElement, pinSetting);
-
-
-  dataList.map(dataItem => {
-    
-    const coords = {
-      lat: dataItem.location.lat,
-      lng: dataItem.location.lng,
-    }
-
-    const customPopupElement = createCustomPopupElement(dataItem);
-
-    const icon = L.icon({
-      iconUrl: './img/pin.svg',
-      iconSize: [40, 40],
-      iconAnchor: [20, 40],
-    });
-    
-    const marker = L.marker(coords, { icon: icon })
-      .addTo(window.__map)
-      .bindPopup( customPopupElement );    
-  });
 }
 
 export const renderMap = (dataList) => {
