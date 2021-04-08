@@ -9,7 +9,7 @@ fetch(`https://22.javascript.pages.academy/keksobooking/data`)
   .then(response => response.json())
   .then(datalist => {
     renderMap(datalist)
-    setupFilterForm( renderMap ) // как передавать данные для отрисовки?
+    setupFilterForm( renderMap.bind(null, datalist) ) // cb action // как передавать данные для отрисовки?
   })
   .catch( (err) => {
     renderMapOnRequestError()
