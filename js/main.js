@@ -7,7 +7,13 @@ import { setupAdFormUsability } from "./ad-form-usability.js";
 
 const dataList = generateData();
 
-renderMap( dataList );
+fetch(`https://22.javascript.pages.academy/keksobooking/data`)
+  .then(response => response.json())
+  .then(datalist => {
+    renderMap(datalist)
+  })
+
+// renderMap( dataList );
 
 setupAdFormValidity();
 setupAdFormUsability();

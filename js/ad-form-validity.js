@@ -49,15 +49,11 @@ const showTitleElementValidityStatus = () => {
     let message = '';
 
     if (valueLength < TITLE_MIN_LENGTH) {
-        message = `Заголовок слишком короткий. Длина должна составлять от ${}. У вас ${valueLength}.`;
+        message = `Заголовок слишком короткий. Длина должна составлять от ${TITLE_MIN_LENGTH}. У вас ${valueLength}.`;
     } else if (valueLength > TITLE_MAX_LENGTH) {
         message = `Заголовок слишком длинный. Не более 100 символов. У вас ${valueLength}.`;
     }
 
-
-
-
-    
     inputTitleElement.setCustomValidity(``);
     
     if ( !(message === '') ) {

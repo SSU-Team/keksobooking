@@ -84,7 +84,7 @@ const renderPins = (dataList) => {
   const customPopupElement = `<h2>Tokio</h2>`;
   
   const icon = L.icon({
-    iconUrl: './../img/main-pin.svg',
+    iconUrl: './img/main-pin.svg',
     iconSize: [40, 40],
     iconAnchor: [20, 40],
     draggable: true,
@@ -99,14 +99,14 @@ const renderPins = (dataList) => {
   dataList.map(dataItem => {
     
     const coords = {
-      lat: dataItem.location.x,
-      lng: dataItem.location.y,
+      lat: dataItem.location.lat,
+      lng: dataItem.location.lng,
     }
-    
+
     const customPopupElement = createCustomPopupElement(dataItem);
-    
+
     const icon = L.icon({
-      iconUrl: './../img/pin.svg',
+      iconUrl: './img/pin.svg',
       iconSize: [40, 40],
       iconAnchor: [20, 40],
     });
