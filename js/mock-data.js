@@ -1,5 +1,5 @@
 
-import { getRandomNumber, getRandomSubarray } from "./_utils.js";
+import { getRandomNumber, getRandomSubarray } from "./utils.js";
 
 const titleList = [
     "AZIMUT Отель Смоленская",

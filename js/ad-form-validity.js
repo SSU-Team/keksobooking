@@ -9,7 +9,7 @@ const selectTimeoutElement = adFormElement.querySelector(`#timeout`);
 const selectRoomNumberElement = adFormElement.querySelector(`#room_number`);
 const selectCapacityElement = adFormElement.querySelector(`#capacity`);
 
-const TITLE_MIN_LENGTH = 10;
+const TITLE_MIN_LENGTH = 30;
 const TITLE_MAX_LENGTH = 100;
 
 const TYPE_TO_MIN_PRICE = {
